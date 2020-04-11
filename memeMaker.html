@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/png" href="img/assets/MENU.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>MEMEgen</title>
+</head>
+
+<body onload="init()" class="body-maker">
+
+    <section class="screen modal-exiter" onclick="toggleMenu('exit')"></section>
+
+    <nav class="main-nav flex space-between align-center">
+        <img src="img/assets/LOGO.png" class="main-logo" onclick="logoGoToGallery()">
+        <div class="nav-links side-menu flex space-around align-center">
+            <a href="index.html" class="nav-link nav-link-gallery">Gallery</a>
+            <a href="memeCollection.html" class="nav-link nav-link-memes">Memes</a>
+            <a onclick="toggleMenu('about')" class="nav-link nav-link-about">About</a>
+        </div>
+        <img src="img/assets/MENU.png" class="menu-logo" onclick="toggleMenu('menu')"
+            onmouseover="trollAnimations(this)">
+    </nav>
+
+    <main class="meme-editor flex wrap">
+        <div class="canvas-container" id="canvas-container">
+    
+        </div>
+        <section class="edit-meme-section flex column align-center opacity">
+
+                <section class="text-edit">
+
+                    <div class="text-edit-top flex space-evenly">
+
+                        <div class="add-text-line setting line-edit" onclick="addTextNode()"><i class="fas fa-plus-circle"></i></div>
+                        <div class="delete-text-line setting line-edit" onclick="deleteTextNode()"><i class="fas fa-remove-format"></i></div>
+                    </div>
+
+                    <div class="text-edit-middle flex space-evenly">
+
+                        <div class="text-size-section flex space-evenly">
+
+                            <div class="text-size text-size-up setting" onclick="fontSizeHandler(this, '+')"><i class="fas fa-font"></i><i class="fas fa-arrow-up additive"></i></div>
+                            <input type="number" class="slider-input" min="1" max="100" value="50" onchange="fontSizeInputHandler(this.value)">
+                            <div class="text-size text-size-down setting" onclick="fontSizeHandler(this, '-')"><i class="fas fa-font"></i><i class="fas fa-arrow-down additive"></i></div>
+                        </div>
+                        <div class="text-align text-align-left setting" onclick="fontAlignHandler(this, 'left')"><i class="fas fa-align-left"></i></div>
+                        <div class="text-align text-align-center setting selected-setting" onclick="fontAlignHandler(this, 'center')"><i class="fas fa-align-justify"></i></div>
+                        <div class="text-align text-align-right setting" onclick="fontAlignHandler(this, 'right')"><i class="fas fa-align-right"></i></div>
+                    </div>
+                    <div class="text-edit-lower flex space-evenly">
+                        <select name="" class="font-families">
+                            <option value="impact">IMPACT</option>
+                        </select>
+                        <div class="stroke-color setting selected-setting" onclick="fontColorTypeHandler(this, 'stroke')"><i class="fab fa-stripe-s"></i></div>
+                        <div class="fill-color setting" onclick="fontColorTypeHandler(this, 'fill')"><i class="fas fa-paint-brush"></i></div>
+                        <div class="font-color setting">
+                            <input type="color" class="color-input" onchange="setCurrentColor(this.value)" value="#000000">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="stickers-section siema">
+                    <div class="siema-item" data-url="img/stickers/deal-glasses.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/deal-glasses.png"></div>
+                    <div class="siema-item" data-url="img/stickers/grumpy-cat.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/grumpy-cat.png"></div>
+                    <div class="siema-item" data-url="img/stickers/happy-birthday.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/happy-birthday.png"></div>
+                    <div class="siema-item" data-url="img/stickers/harambe.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/harambe.png"></div>
+                    <div class="siema-item" data-url="img/stickers/joint.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/joint.png"></div>
+                    <div class="siema-item" data-url="img/stickers/mask.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/mask.png"></div>
+                    <div class="siema-item" data-url="img/stickers/salt-bae.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/salt-bae.png"></div>
+                    <div class="siema-item" data-url="img/stickers/shia-la-bouffe.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/shia-la-bouffe.png"></div>
+                    <div class="siema-item" data-url="img/stickers/snoop-dog.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/snoop-dog.png"></div>
+                    <div class="siema-item" data-url="img/stickers/thug-life-hat.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/thug-life-hat.png"></div>
+                    <div class="siema-item" data-url="img/stickers/troll-face.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/troll-face.png"></div>
+                    <div class="siema-item" data-url="img/stickers/virus.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/virus.png"></div>
+                    <div class="siema-item" data-url="img/stickers/wanna-fuk.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/wanna-fuk.png"></div>
+                    <div class="siema-item" data-url="img/stickers/weed.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/weed.png"></div>
+                    <div class="siema-item" data-url="img/stickers/nevo-i.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/nevo-i.png"></div>
+                </section>
+                <section class="export-buttons flex space-between align-center">
+
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                        <input name="img" id="imgData" type="hidden" />
+                        <button class="share-btn btn" type="submit">Share</button>
+                        <div class="share-container"></div>
+                    </form>
+
+                    <button class="save-meme-btn btn" onclick="saveMemeToCollection()">Save To Collection</button>
+                    <a href="#" onclick="downloadCanvas(this)" download="" class="download-btn btn">Download</a>
+                </section>
+        </section>
+    </main>
+
+    <div class="modal flex column space-evenly align-center">
+
+        <main class="modal-content flex column container">
+
+            <span class="head-span flex space-center align-center">
+                <p class="header-welcome align-baseline">Welcome To </p><span class="flex"><img
+                        src="img/assets/LOGO.png" class="modal-header-logo"
+                        onmouseover="trollAnimations(this)"><span>!</span></span>
+            </span>
+            <p class="head-text">An easy Meme generator using canvas and a whole lot of trolling.</p>
+            <p class="header-secondary align-start">Gallery</p>
+
+            <div class="navigation-gallery-section grid align-center">
+                <span class="navigation-texts">
+                    <p class="gallery-text">Here you can browse all available meme images via search or the popular keywords
+                        and pick the one you want to start customizing for your very own meme! </p>
+                    <p class="gallery-text">Can't find the one you were looking for? just enter a valid
+                         image url in the 'From URL' text box and MEME IT!</p>
+                </span>
+                <div class="gallery-photo-block flex column space-center">
+                    <div class="view-size-toggle fake-button flex space-center align-center animated fast" onmouseover="animateCSS('.fake-button', 'rubberBand')">
+                        <span class="enlarge-text">M</span><i class="fas fa-eye enlarge-icon"></i></div>
+                    <p>Toggle between 3 different sizes!</p>
+                </div>
+            </div>
+
+            <!-- <p class="header-secondary maker-head flex align-start">Meme Maker. The <span
+                    class="header-memaker">Memaker</span>.</p>
+            <div class="navigation-maker-section grid align-center">
+                <div class="maker-photo-block flex column space-center">
+                    <div class="view-size-toggle fake-button flex space-center align-center animated slow">
+                        <span class="enlarge-text">M</span><i class="fas fa-eye enlarge-icon"></i></div>
+                    <p>Toggle between 3 different sizes!</p>
+                </div>
+                <p class="maker-text">Here you can browse all available meme images via search or the popular keywords
+                    and pick the one you want to start customizing for your very own meme! </p>
+            </div> -->
+            <footer class="footer-section">
+                <button class="github-btn btn" type="submit">Github</button>
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="js/siema.min.js"></script>
+    <script src="https://unpkg.com/konva@4.2.2/konva.min.js"></script>
+    <script src="js/storageService.js"></script>
+    <script src="js/upload-service.js"></script>
+    <script src="js/utils.js"></script>
+    
+    <script src="js/galleryController.js"></script>
+    <script src="js/galleryService.js"></script>
+    <script src="js/memeService.js"></script>
+    <script src="js/memeController.js"></script>
+</body>
+
+</html>

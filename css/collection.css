@@ -1,0 +1,125 @@
+/* body {
+    margin: 0;
+} */
+
+main {
+    margin: 1rem;
+}
+
+.main-header {
+    font-size: 3rem;
+    margin-right: 2rem;
+}
+
+.meme-collection {
+    width: 95%;
+    margin: 1rem auto 0;
+}
+
+.card {
+    width: 15rem;
+    height: auto;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+    opacity: 0;
+    margin-bottom: 1rem;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+}
+
+.enlarge-icon {
+    font-size: 4rem;
+}
+
+.view-size-toggle {
+    background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+
+.fake-button {
+
+    align-self: center;
+}
+
+.view-size-toggle:hover {
+    /* box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); */
+    transform: scale(1.2);
+}
+
+.view-size-toggle span {
+    position: absolute;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.content-header {
+    width: 95%;
+    margin: auto;
+}
+
+/* .modal {
+
+    background-color: white;
+    position: absolute;
+    float: left;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 25px 9px rgba(255, 215, 0, 1);
+    -moz-box-shadow: 0px 0px 25px 9px rgba(255, 215, 0, 1);
+    box-shadow: 0px 0px 25px 9px rgba(255, 215, 0, 1);
+    transition: 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+} */
+
+.show {
+    opacity: 1;
+    z-index: 8000;
+    pointer-events: all;
+}
+
+.modal-meme img {
+    width: 100%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    margin-bottom: 0.5rem;
+}
+
+.hidden {
+    height: 0;
+    opacity: 0;
+    display: block;
+}
+
+.hidden-modal {
+    height: 0;
+    opacity: 0;
+    display: block;
+}
+
+.meme-collection-buttons {
+    width: 97%;
+    border-top: 2px dashed;
+    padding: 0.5rem 0;
+}
+
+
+@media (max-width: 1297px) {
+
+    main .content-header {
+
+        margin-top: 4.5rem;
+    }
+
+    .main-nav {
+
+        top: 0;
+    }
+
+}
