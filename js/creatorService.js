@@ -41,8 +41,6 @@ var zStickerGallery = [
     {src: "img/stickers/rick.png"},
     {src: "img/stickers/dede.png"},
     {src: "img/stickers/doomguy.png"},
-    {src: "img/stickers/woldo.png"},
-    {src: "img/stickers/woldo.png"},
 ];
 
 function populateStickers() {
