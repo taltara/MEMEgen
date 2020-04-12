@@ -2,7 +2,7 @@
 
 function saveToStorage(KEY, val) {
     localStorage.setItem(KEY, JSON.stringify(val));
-    // console.log(loadFromStorage(KEY));
+    console.log(loadFromStorage(KEY));
     
 }
 

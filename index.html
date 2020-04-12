@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/creator.css">
+    <link rel="stylesheet" href="css/index.css">
     <title>MEMEgen - Gallery</title>
 </head>
 <body onload="initMemeGallery()">
@@ -19,7 +19,7 @@
         <img src="img/assets/LOGO.png" class="main-logo" onclick="logoGoToGallery()">
         <div class="nav-links side-menu flex space-around align-center">
             <a href="index.html" class="nav-link nav-link-gallery">Gallery</a>
-            <a href="memeCollection.html" class="nav-link nav-link-memes">Memes</a>
+            <a href="collection.html" class="nav-link nav-link-memes">Memes</a>
             <a onclick="toggleMenu('about')" class="nav-link nav-link-about">About</a>
         </div>
         <img src="img/assets/MENU.png" class="menu-logo" onclick="toggleMenu('menu')"
@@ -105,13 +105,11 @@
         </div>
     </main>
 
-
-    <script src="js/galleryController.js"></script>
-    <script src="js/galleryService.js"></script>
+    
     <script src="js/storageService.js"></script>
-    <!-- <script src="js/upload-service.js"></script> -->
+    <script src="js/indexController.js"></script>
+    <script src="js/indexService.js"></script>
     <script src="js/utils.js"></script>
-    <!-- <script src="js/memeService.js"></script> -->
-    <!-- <script src="js/memeController.js"></script> -->
+
 </body>
 </html>
