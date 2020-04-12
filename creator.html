@@ -40,6 +40,7 @@
 
                         <div class="add-text-line setting line-edit" onclick="addTextNode()"><i class="fas fa-plus-circle"></i></div>
                         <div class="delete-text-line setting line-edit" onclick="deleteTextNode()"><i class="fas fa-remove-format"></i></div>
+                        <div class="delete-sticker setting line-edit" onclick="deleteSticker()"><i class="fas fa-image"></i><i class="fas fa-slash"></i></div>
                     </div>
 
                     <div class="text-edit-middle flex space-evenly">
@@ -68,21 +69,7 @@
                 </section>
 
                 <section class="stickers-section siema">
-                    <div class="siema-item" data-url="img/stickers/deal-glasses.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/deal-glasses.png"></div>
-                    <div class="siema-item" data-url="img/stickers/grumpy-cat.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/grumpy-cat.png"></div>
-                    <div class="siema-item" data-url="img/stickers/happy-birthday.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/happy-birthday.png"></div>
-                    <div class="siema-item" data-url="img/stickers/harambe.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/harambe.png"></div>
-                    <div class="siema-item" data-url="img/stickers/joint.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/joint.png"></div>
-                    <div class="siema-item" data-url="img/stickers/mask.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/mask.png"></div>
-                    <div class="siema-item" data-url="img/stickers/salt-bae.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/salt-bae.png"></div>
-                    <div class="siema-item" data-url="img/stickers/shia-la-bouffe.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/shia-la-bouffe.png"></div>
-                    <div class="siema-item" data-url="img/stickers/snoop-dog.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/snoop-dog.png"></div>
-                    <div class="siema-item" data-url="img/stickers/thug-life-hat.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/thug-life-hat.png"></div>
-                    <div class="siema-item" data-url="img/stickers/troll-face.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/troll-face.png"></div>
-                    <div class="siema-item" data-url="img/stickers/virus.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/virus.png"></div>
-                    <div class="siema-item" data-url="img/stickers/wanna-fuk.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/wanna-fuk.png"></div>
-                    <div class="siema-item" data-url="img/stickers/weed.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/weed.png"></div>
-                    <div class="siema-item" data-url="img/stickers/nevo-i.png" onclick="addStickerNode(this.dataset.url)"><img src="img/stickers/nevo-i.png"></div>
+                   
                 </section>
                 <section class="export-buttons flex space-between align-center">
 
@@ -153,6 +140,7 @@
     <script src="js/indexService.js"></script>
     <script src="js/indexService.js"></script>
     <script src="js/creatorController.js"></script>
+    <script src="js/creatorService.js"></script>
 </body>
 
 </html>

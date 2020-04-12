@@ -11,6 +11,7 @@ var gFontAlign = 'center';
 var gFontColorType = 'stroke';
 var gCount = 0;
 var gTexts = [];
+var gStickers = [];
 
 function componentToHex(c) {
     var hex = c.toString(16);
@@ -148,7 +149,7 @@ function toggleMenu(path) {
                     
                     elMemeModal.classList.remove('show-meme');
                     elSideMenu.classList.add('side-menu');
-                    console.log(elMemeModal.classList);
+                    // console.log(elMemeModal.classList);
                     document.body.classList.remove('menu-open');
     
                 } else {

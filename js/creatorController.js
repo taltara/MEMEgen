@@ -6,6 +6,8 @@ const KEY = 'memeCollection';
 var stage, layer;
 var gLastTouchedTextId = -1;
 var gLastTouchedText = null;
+var gLastTouchedStickerId = -1;
+var gLastTouchedSticker = null;
 var gLastStickerTransformer = null;
 var gMemePhotoHeight;
 var gDraggedngSticker = false;
@@ -16,6 +18,7 @@ function init() {
     updateNavBarCurrent('gallery');
     updateNavBarCurrent('memes');
     updateNavBarCurrent('about');
+    populateStickers();
     initKonva();
     gCanvas = document.querySelector('canvas');
     gCtx = gCanvas.getContext('2d');
@@ -91,6 +94,36 @@ function deleteTextNode() {
 
     elToDelete.tr.destroy();
     elToDelete.textNode.destroy();
+
+    layer.draw();
+}
+
+function deleteSticker() {
+
+    if (!gStickers.length) return;
+
+    var elToDelete;
+
+    if (gLastTouchedStickerId === -1) {
+
+        elToDelete = gStickers.pop();
+
+    } else {
+
+        var stickerToDelete = gStickers.findIndex(function (sticker) {
+
+            return sticker.stickerNode.attrs.id === gLastTouchedStickerId;
+        });
+        console.log(stickerToDelete);
+
+        elToDelete = gStickers.splice(stickerToDelete, 1);
+        elToDelete = elToDelete[0];
+
+        gLastTouchedStickerId = -1;
+    }
+
+    elToDelete.tr.destroy();
+    elToDelete.stickerNode.destroy();
 
     layer.draw();
 }
@@ -171,16 +204,16 @@ function addTextNode(initY = '') {
 
             gLastTouchedText.shadowBlur(0);
             let textEl = findTrByTextNodeId(gLastTouchedText.attrs.id);
-            if(textEl != undefined)textEl.tr.hide();
+            if (textEl != undefined) textEl.tr.hide();
         }
-        if(gLastStickerTransformer) gLastStickerTransformer.hide();
+        if (gLastStickerTransformer) gLastStickerTransformer.hide();
         textNode.shadowBlur(10);
         let textEl = findTrByTextNodeId(textNode.attrs.id);
         textEl.tr.show();
 
         layer.draw();
         gLastTouchedText = textNode;
-        
+
         gLastTouchedTextId = textNode.attrs.id;
 
     });
@@ -189,15 +222,15 @@ function addTextNode(initY = '') {
 
         gLastTouchedText.shadowBlur(0);
         let textEl = findTrByTextNodeId(gLastTouchedText.attrs.id);
-        if(textEl)textEl.tr.hide();
+        if (textEl) textEl.tr.hide();
     }
-    if(gLastStickerTransformer) gLastStickerTransformer.hide();
+    if (gLastStickerTransformer) gLastStickerTransformer.hide();
     textNode.shadowBlur(10);
 
     textNodeOnDClick(textNode, tr);
     gLastTouchedTextId = textNode.attrs.id;
     gLastTouchedText = textNode;
-    
+
     gTexts.push({ textNode, tr });
     layer.add(tr);
     layer.draw();
@@ -210,7 +243,7 @@ function findTrByTextNodeId(id) {
         return text.textNode.attrs.id === id;
     });
     console.log(textNodeTr);
-    
+
     return textNodeTr;
 }
 
@@ -406,14 +439,14 @@ function getBaseMemeSrc(type = true) {
 function drawImg() {
 
     var img = new Image();
-    
+
     let imgId = loadFromStorage(KEYm);
-    if(imgId.type === 'external') {
-        
+    if (imgId.type === 'external') {
+
         img.src = imgId.id;
-        img.crossOrigin="anonymous";
+        img.crossOrigin = "anonymous";
     } else {
-        
+
         img.src = getBaseMemeSrc();
     }
 
@@ -422,17 +455,28 @@ function drawImg() {
     img.onload = () => {
 
         var newImageHeight = img.height;
-        if (img.width > gCanvas.width || img.width < gCanvas.width) {
+        var newImageWidth = gCanvas.width;
 
-            newImageHeight = img.height * (gCanvas.width / img.width);
-            // console.log(Math.abs((gCanvas.height - newImageHeight) / 2), img.width, newImageHeight);
+        if(img.height > img.width) {
+
+            newImageHeight = gCanvas.height;
+            newImageWidth = img.width * (gCanvas.width / img.height);
+        } else {
+
+            if (img.width > gCanvas.width || img.width < gCanvas.width) {
+    
+                newImageHeight = img.height * (gCanvas.width / img.width);
+                // console.log(Math.abs((gCanvas.height - newImageHeight) / 2), img.width, newImageHeight);
+            }
+
         }
+
         gMemePhotoHeight = newImageHeight;
         var konvaImg = new Konva.Image({
-            x: 0,
+            x: Math.abs((gCanvas.width - newImageWidth) / 2),
             y: Math.abs((gCanvas.height - newImageHeight) / 2),
             image: img,
-            width: gCanvas.width,
+            width: newImageWidth,
             height: newImageHeight
         });
 
@@ -657,41 +701,6 @@ function setColor(color, event) {
 
 }
 
-
-
-function draw(ev) {
-
-    if (clearing) return;
-
-    const offsetX = ev.offsetX
-    const offsetY = ev.offsetY
-
-    switch (gCurrShape) {
-
-        case 'triangle':
-            drawTriangle(offsetX, offsetY);
-            break;
-
-        case 'rect':
-            drawRect(offsetX, offsetY);
-            break;
-
-        case 'circle':
-            drawArc(offsetX, offsetY);
-            break;
-
-        case 'text':
-            let elNameInput = document.querySelector('.text-input').value;
-            gDrawText = (elNameInput) ? elNameInput : 'NEMO';
-            drawText(gDrawText, offsetX, offsetY);
-            break;
-
-        case 'line':
-            drawLine(offsetX, offsetY);
-            break;
-    }
-}
-
 function prepareCanvasForShare(beforeOrAfter) {
 
     var allElements = layer.getChildren(function (element) {
@@ -727,9 +736,9 @@ function addStickerNode(imgSrc) {
 
     var stageBox = stage.container().getBoundingClientRect();
 
-
     Konva.Image.fromURL(imgSrc, function (stickerNode) {
         stickerNode.setAttrs({
+            id: gCount++,
             x: stageBox.width / 2 - (stageBox.width * 0.9) / 2,
             y: stageBox.width / 2 - gFontSize / 2,
             scaleX: 0.25,
@@ -740,7 +749,6 @@ function addStickerNode(imgSrc) {
 
         var tr = new Konva.Transformer({
             node: stickerNode,
-            // enabledAnchors: ['middle-left', 'middle-right', 'middle'],
             // set minimum width of text
             boundBoxFunc: function (oldBox, newBox) {
                 newBox.width = Math.max(30, newBox.width);
@@ -750,12 +758,12 @@ function addStickerNode(imgSrc) {
 
         stickerNode.on('mousedown touchstart', function () {
 
-            if(gLastStickerTransformer) gLastStickerTransformer.hide();
+            if (gLastStickerTransformer) gLastStickerTransformer.hide();
             if (gLastTouchedText) {
 
                 gLastTouchedText.shadowBlur(0);
                 let textEl = findTrByTextNodeId(gLastTouchedText.attrs.id);
-                if(textEl != undefined)textEl.tr.hide();
+                if (textEl != undefined) textEl.tr.hide();
             }
 
             var imageTransformers = layer.children.filter(child => {
@@ -766,27 +774,30 @@ function addStickerNode(imgSrc) {
 
             imageTransformers.show();
             gLastStickerTransformer = imageTransformers;
-            console.log(stickerNode);
-            console.log(imageTransformers);
-            
+            gLastTouchedSticker = stickerNode;
+            gLastTouchedStickerId = stickerNode.attrs.id;
+
         });
-        if(gLastStickerTransformer) {
+        if (gLastStickerTransformer) {
 
             gLastStickerTransformer.hide();
-            gLastStickerTransformer = tr;
         }
+        gLastStickerTransformer = tr;
+
         if (gLastTouchedText) {
 
             gLastTouchedText.shadowBlur(0);
             let textEl = findTrByTextNodeId(gLastTouchedText.attrs.id);
-            if(textEl != undefined)textEl.tr.hide();
+            if (textEl != undefined) textEl.tr.hide();
         }
+
+        gLastTouchedStickerId = stickerNode.attrs.id;
+        gLastTouchedSticker = stickerNode;
+        gStickers.push({ stickerNode, tr });
         layer.add(tr);
         layer.batchDraw();
 
-        // console.log(tr._node);
-        // console.log(stickerNode);
     });
-    
-    
+
+
 }

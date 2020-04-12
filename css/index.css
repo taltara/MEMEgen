@@ -2,6 +2,7 @@
 body {
 
     font-family: 'Fira Sans', sans-serif !important;
+    height: 100vh;
 }
 
 h1 {
@@ -44,7 +45,7 @@ h1 {
     margin: auto;
     min-height: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px dashed;
+    /* border-bottom: 2px dashed; */
 }
 
 .search-filter-nav input{
@@ -84,6 +85,13 @@ h1 {
 
     width: 95%;
 } 
+
+.gallery-container-span {
+
+    border-top: 3px dashed;
+    /* height: 100vh; */
+    background-image: linear-gradient( 90.9deg,  rgba(255,187,187,1) -8.8%, rgba(255,220,177,1) 12.4%, rgba(255,249,177,1) 35.6%, rgba(220,255,177,1) 59.6%, rgba(177,218,255,1) 84%, rgba(222,177,255,1) 107.9% );
+}
 .gallery-container {
 
     margin: 1rem auto 0;

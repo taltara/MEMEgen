@@ -10,6 +10,12 @@ body {
     /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
 }
 
+
+.body-maker {
+
+    background-image: linear-gradient( 90.9deg,  rgba(255,187,187,1) -8.8%, rgba(255,220,177,1) 12.4%, rgba(255,249,177,1) 35.6%, rgba(220,255,177,1) 59.6%, rgba(177,218,255,1) 84%, rgba(222,177,255,1) 107.9% );
+    height: 100vh;
+}
 .screen {
     position: fixed;
     top: 0;
@@ -62,6 +68,12 @@ p {
 .text-edit>*:not(:last-child) {
     border-bottom: 1px dashed;
 }
+
+
+.text-edit, .export-buttons, .stickers-section {
+
+    background-color: rgba(255, 255, 255, 0.4);
+} 
 
 .text-edit, .export-buttons {
     border: 2px dashed black;
@@ -215,6 +227,11 @@ select {
 
 .font-color {
     border: none;
+}
+
+.fa-slash {
+
+    position: absolute;
 }
 
 .font-color i {

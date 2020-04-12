@@ -28,7 +28,8 @@ function populateCollection() {
 
     gMemes.forEach(meme => {
 
-        htmlString += `<img src="${meme.src}" class="card" data-id="${meme.id}" onclick="toggleMenu(this.dataset.id)">`;
+        // <span class="delete-btn"><i class="fas fa-times-circle fa-2x del-book-button book-buttons" onclick="onDeleteBook('${book.id}', this)"></i></span>
+        htmlString += `<span><img src="${meme.src}" class="card" data-id="${meme.id}" onclick="toggleMenu(this.dataset.id)"><i class="fas fa-times-circle fa-2x del-meme-button meme-buttons" onclick="deleteMemeFromCollection('${meme.id}', this)"></i></span>`;
     });
 
     if (elCollection.innerHTML) animateCollection('out', '.card');
@@ -69,7 +70,7 @@ function openMeme(memeId) {
     event.stopPropagation();
 
     var elModal = document.querySelector('.modal-meme');
-
+    document.querySelector('.del-button-span').innerHTML = `<button class="remove-btn btn" onclick="deleteMeme('${memeId}')">Remove</button>`;
     if (elModal.classList.contains('show-meme')) {
 
         elModal.classList.remove('show-meme');
@@ -103,4 +104,22 @@ function updateModal(elModal, memeId) {
 
     elModal.querySelector('img').src = meme.src;
 
+}
+
+
+function deleteMemeFromCollection(memeId, elDeleteButton) {
+    if(event)   event.stopPropagation();
+
+    if(elDeleteButton.classList.contains('fa-spin')) {
+
+        deleteMeme(memeId);
+        elDeleteButton.classList.remove('fa-spin');
+    } else {
+
+        elDeleteButton.classList.add('fa-spin');
+
+        setTimeout(() => {
+            elDeleteButton.classList.remove('fa-spin');
+        }, 4000);
+    }
 }
