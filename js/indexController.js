@@ -5,7 +5,6 @@ const KEYm = 'imgToMeme';
 const KEY1 = 'MEMEgenFirstVisit';
 
 var gGallery = [];
-var gCurrGallerynSize = 1;
 var tutorialAnimated = false;
 
 
@@ -70,7 +69,6 @@ function startTutorial() {
 
 
 function populateGalleryContainer(filter = '') {
-    // console.log(filter);
 
     var elGContainer = document.querySelector('.gallery-container');
     let imagesToShow = gGallery.slice();
@@ -117,31 +115,6 @@ function createMemeRedirect(elImgToMeme, type) {
     if (type === 'internal') saveToStorage(KEYm, { id: elImgToMeme.dataset.id, type });
     else if (type === 'external') saveToStorage(KEYm, { id: elImgToMeme, type });
     window.location.href = "creator.html";
-}
-
-function changeGallerySize(size = 0) {
-
-    var allElCollection = document.querySelectorAll('.img-card');
-    var newSize;
-
-    if (size >= 1) {
-
-        gCurrGallerynSize = newSize = size;
-
-    } else {
-
-        newSize = (gCurrGallerynSize === 1) ? 2 : (gCurrGallerynSize === 2) ? 3 : 1;
-        gCurrGallerynSize = newSize;
-    }
-    var setSize = (newSize === 1) ? 15 : (newSize === 2) ? 20 : 25;
-
-    allElCollection.forEach(card => {
-
-        card.style.width = `${setSize}rem`;
-        card.style.height = `auto`;
-    });
-    updateEnlargeIcon(gCurrGallerynSize);
-    animateCSS('.view-size-toggle', 'rubberBand');
 }
 
 function memeGalleryStats(amount = 10) {

@@ -131,6 +131,7 @@ p {
 
 .nav-links {
     width: 50rem;
+    min-width: 10rem;
     /* margin-right: 2rem; */
 }
 
@@ -409,6 +410,7 @@ a {
 
 .modal-header-logo {
     width: 15rem;
+    height: 3rem;
     transition: ease-in-out 0.2s;
 }
 
@@ -540,7 +542,6 @@ a {
         border-left: 1px solid rgba(41, 41, 41, 0.7);
         background: rgba(41, 41, 41, 1);
         width: 30%;
-        min-width: 7rem;
         transition: transform 0.4s;
         transform: translateX(101.5%);
         -webkit-box-shadow: -6px 3px 10px 0px rgba(0, 0, 0, 0.75);
@@ -614,8 +615,44 @@ a {
 
 @media (max-width: 620px) {
     .modal {
-        margin-top: 5rem;
-        min-width: 15rem;
+        margin-top: 2.5rem;
+        min-width: 25rem;
+    }
+
+    .modal-header-logo {
+
+        width: 10rem;
+    height: 2rem;
+    align-self: center;
+    }
+
+    .header-welcome {
+
+        font-size: 2rem;
+    }
+
+    .header-title h1 {
+
+        font-size: 2rem;
+    }
+
+    .view-size-toggle .enlarge-icon {
+
+        font-size: 3rem;
+    }
+}
+
+
+@media (max-width: 432px) {
+
+    .external-input {
+
+        width: 12rem;
+    }
+
+    .modal {
+        margin-top: 2.5rem;
+        min-width: 20rem;
     }
 }
 

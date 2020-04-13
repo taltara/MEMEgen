@@ -16,6 +16,7 @@ window.onclick = function (event) {
 
 function initMemesCollection() {
 
+    changeGallerySize(2, '.card');
     updateNavBarCurrent('memes');
     getAllMemeCollection();
     populateCollection();
@@ -40,30 +41,30 @@ function populateCollection() {
 }
 
 
-function changeCollectionSize(size = 0) {
+// function changeCollectionSize(size = 0) {
 
-    var allElCollection = document.querySelectorAll('.card');
-    var newSize;
+//     var allElCollection = document.querySelectorAll('.card');
+//     var newSize;
 
-    if(size >= 1) {
+//     if(size >= 1) {
 
-        gCurrCollectionSize = newSize = size;
+//         gCurrCollectionSize = newSize = size;
 
-    } else {
+//     } else {
 
-        newSize = (gCurrCollectionSize === 1) ? 2 : (gCurrCollectionSize === 2) ? 3 : 1;
-        gCurrCollectionSize = newSize;
-    }
-    var setSize = (newSize === 1) ? 15 : (newSize === 2) ? 20 : 25;
+//         newSize = (gCurrCollectionSize === 1) ? 2 : (gCurrCollectionSize === 2) ? 3 : 1;
+//         gCurrCollectionSize = newSize;
+//     }
+//     var setSize = (newSize === 1) ? 15 : (newSize === 2) ? 20 : 25;
 
-    allElCollection.forEach(card => {
+//     allElCollection.forEach(card => {
 
-        card.style.width = `${setSize}rem`;
-        card.style.height = `auto`;
-    });
-    updateEnlargeIcon(gCurrCollectionSize);
-    animateCSS('.view-size-toggle', 'rubberBand');
-}
+//         card.style.width = `${setSize}rem`;
+//         card.style.height = `auto`;
+//     });
+//     updateEnlargeIcon(gCurrCollectionSize);
+//     animateCSS('.view-size-toggle', 'rubberBand');
+// }
 
 function openMeme(memeId) {
 

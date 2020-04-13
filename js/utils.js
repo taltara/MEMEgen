@@ -13,6 +13,8 @@ var gCount = 0;
 var gTexts = [];
 var gStickers = [];
 
+var gCurrGallerynSize = 1;
+
 function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
@@ -96,9 +98,34 @@ function logoGoToGallery() {
     window.location.href = "index.html";
 }
 
+function changeGallerySize(size = 0, selector) {
+
+    var allElCollection = document.querySelectorAll(selector);
+    var newSize;
+
+    if (size >= 1) {
+
+        gCurrGallerynSize = newSize = size;
+
+    } else {
+
+        newSize = (gCurrGallerynSize === 1) ? 2 : (gCurrGallerynSize === 2) ? 3 : (gCurrGallerynSize === 3) ? 4 : 1;
+        gCurrGallerynSize = newSize;
+    }
+    var setSize = (newSize === 1) ? 10 : (newSize === 2) ? 15 : (newSize === 3) ? 20 : 25;
+
+    allElCollection.forEach(card => {
+
+        card.style.width = `${setSize}rem`;
+        card.style.height = `auto`;
+    });
+    updateEnlargeIcon(gCurrGallerynSize);
+    animateCSS('.view-size-toggle', 'rubberBand');
+}
+
 function updateEnlargeIcon(size) {
 
-    var letter = (size === 1) ? 'M' : (size === 2) ? 'L' : 'X'; 
+    var letter = (size === 1) ? 'S' : (size === 2) ? 'M' : (size === 3) ? 'L' : 'XL'; 
 
     document.querySelector('.enlarge-text').textContent = letter;
 }
