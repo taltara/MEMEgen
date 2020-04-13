@@ -112,15 +112,19 @@ function deleteMemeFromCollection(memeId, elDeleteButton) {
     if(event)   event.stopPropagation();
 
     if(elDeleteButton.classList.contains('fa-spin')) {
-
+        elDeleteButton.style.color = 'black';
+        
         deleteMeme(memeId);
         elDeleteButton.classList.remove('fa-spin');
     } else {
-
+        
         elDeleteButton.classList.add('fa-spin');
-
+        elDeleteButton.style.color = 'tomato';
+        
+        
         setTimeout(() => {
             elDeleteButton.classList.remove('fa-spin');
+            elDeleteButton.style.color = 'black';
         }, 4000);
     }
 }

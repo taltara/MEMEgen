@@ -892,6 +892,10 @@ function tutorialMemeCreator() {
                                                                 elStickers.style.transform = 'unset';
                                                                 gStickersEl.goTo(0);
                                                                 elExport.style.zIndex = 'unset';
+                                                                elButtons.forEach(button => {
+
+                                                                    button.style.transform = 'unset';
+                                                                });
                                                                 toggleMenu('about');
                                                             }, 1000);
                                                         }, 500);
@@ -911,12 +915,3 @@ function tutorialMemeCreator() {
         }, 300);
     }, 300);
 }
-
-
-// setTimeout(() => {
-//     if (window.innerWidth <= 1297) elMenu.classList.add('side-menu');
-
-//     document.body.classList.remove('menu-open');
-//     elExternalSection.style.zIndex = 'unset';
-//     toggleMenu('about');
-// }, 1000);
