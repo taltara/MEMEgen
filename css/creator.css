@@ -433,6 +433,18 @@ a {
     grid-auto-flow: row dense;
 }
 
+.creator-gallery-section p {
+
+    margin-bottom: 1rem;
+}
+
+.creator-gallery-section .navigation-texts {
+
+    border-right: none;
+    border-bottom: 1px dashed;
+    margin-bottom: 1rem;
+}
+
 .gallery-text {
     text-align: start;
     padding-right: 0.5rem;

@@ -25,17 +25,17 @@ function initMemesCollection() {
 function populateCollection() {
 
     var elCollection = document.querySelector('.meme-collection');
-    var htmlString = '';
+    var strHTML = '';
 
     gMemes.forEach(meme => {
 
         // <span class="delete-btn"><i class="fas fa-times-circle fa-2x del-book-button book-buttons" onclick="onDeleteBook('${book.id}', this)"></i></span>
-        htmlString += `<span><img src="${meme.src}" class="card" data-id="${meme.id}" onclick="toggleMenu(this.dataset.id)"><i class="fas fa-times-circle fa-2x del-meme-button meme-buttons" onclick="deleteMemeFromCollection('${meme.id}', this)"></i></span>`;
+        strHTML += `<span><img src="${meme.src}" class="card" data-id="${meme.id}" onclick="toggleMenu(this.dataset.id)"><i class="fas fa-times-circle fa-2x del-meme-button meme-buttons" onclick="deleteMemeFromCollection('${meme.id}', this)"></i></span>`;
     });
 
     if (elCollection.innerHTML) animateCollection('out', '.card');
     
-    if(gMemes.length) elCollection.innerHTML = htmlString;
+    if(gMemes.length) elCollection.innerHTML = strHTML;
     else elCollection.innerHTML = '<h2>No Saved Memes</h2>';
     animateCollection('in', '.card');
 }

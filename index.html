@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="img/assets/MENU.png"/>
+    <link rel="shortcut icon" type="image/png" href="img/assets/MENU.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
@@ -11,8 +12,9 @@
     <link rel="stylesheet" href="css/index.css">
     <title>MEMEgen - Gallery</title>
 </head>
+
 <body onload="initMemeGallery()">
-    
+
     <section class="screen modal-exiter" onclick="toggleMenu('exit')"></section>
 
     <nav class="main-nav flex space-between align-center">
@@ -31,8 +33,9 @@
         <div class="main-header flex align-center space-between wrap">
             <span class="header-title flex align-center">
                 <h1>Create Your Own Meme</h1>
-                <div class="view-size-toggle flex space-center align-center faster" onclick="changeGallerySize(0, '.img-card')">
-                <span class="enlarge-text">S</span><i class="fas fa-eye enlarge-icon"></i></div>
+                <div class="view-size-toggle flex space-center align-center faster"
+                    onclick="changeGallerySize(0, '.img-card')">
+                    <span class="enlarge-text">S</span><i class="fas fa-eye enlarge-icon"></i></div>
             </span>
             <div class="external-meme-section">
                 <form onsubmit="externalMemeRedirector()" class="flex align center">
@@ -41,13 +44,14 @@
                 </form>
             </div>
         </div>
-        
+
         <section class="search-filter-nav flex align-baseline">
 
-            <input list="popular-keywords" type="text" placeholder="Start typing to filter" name="search-gallery" class="search-gallery text-search" onkeyup="populateGalleryContainer(this.value)">
+            <input list="popular-keywords" type="text" placeholder="Start typing to filter" name="search-gallery"
+                class="search-gallery text-search" onkeyup="populateGalleryContainer(this.value)">
             <datalist id="popular-keywords">
 
-              </datalist>
+            </datalist>
 
             <div class="popular-filters flex space-evenly align-baseline">
 
@@ -57,7 +61,7 @@
         <span class="gallery-container-span">
 
             <section class="gallery-container flex wrap space-evenly align-center">
-    
+
             </section>
 
         </span>
@@ -66,7 +70,7 @@
         <div class="modal flex column space-evenly align-center">
 
             <main class="modal-content flex column container">
-    
+
                 <span class="head-span flex space-center align-center">
                     <p class="header-welcome align-baseline">Welcome To </p><span class="flex"><img
                             src="img/assets/LOGO.png" class="modal-header-logo"
@@ -74,21 +78,51 @@
                 </span>
                 <p class="head-text">An easy Meme generator using canvas and a whole lot of trolling.</p>
                 <p class="header-secondary align-start">Gallery</p>
-    
+
                 <div class="navigation-gallery-section grid align-center">
                     <span class="navigation-texts">
-                        <p class="gallery-text">Here you can browse all available meme <span class="modal-tutorial" onclick="tutorialFilterSearch()">images via search</span> or the popular keywords
+                        <p class="gallery-text">Here you can browse all available meme <span class="modal-tutorial"
+                                onclick="tutorialFilterSearch()">images via search</span> or the popular keywords
                             and pick the one you want to start customizing for your very own meme! </p>
                         <p class="gallery-text">Can't find the one you were looking for? just enter a valid
-                             image url in the <span class="modal-tutorial" onclick="tutorialFromUrl()">'From URL' text box</span> and MEME IT!</p>
+                            image url in the <span class="modal-tutorial" onclick="tutorialFromUrl()">'From URL' text
+                                box</span> and MEME IT!</p>
                     </span>
                     <div class="gallery-photo-block flex column space-center">
-                        <div class="view-size-toggle fake-button flex space-center align-center animated fast" onmouseover="animateCSS('.fake-button', 'rubberBand')">
+                        <div class="view-size-toggle fake-button flex space-center align-center animated fast"
+                            onmouseover="animateCSS('.fake-button', 'rubberBand')">
                             <span class="enlarge-text">S</span><i class="fas fa-eye enlarge-icon"></i></div>
                         <p>Toggle between 3 different sizes!</p>
                     </div>
                 </div>
-    
+
+                <p class="header-secondary align-start">Creator</p>
+
+                <div class="creator-gallery-section align-center">
+                    <span class="navigation-texts">
+                        <p class="gallery-text">Creating a meme has never been easier! Add and remove text boxes with
+                            full size and alignment customation,
+                            including fill or stroke color for each!</p>
+                        <p class="gallery-text">Need more than just text? with a full collection of stickers, any simple
+                            meme creation is an instant work
+                            of art! Share, download or save your meme to your personal collection for the ultimate
+                            exposure to your genius!</p>
+                    </span>
+                </div>
+
+                <p class="header-secondary align-start">Collection</p>
+
+                <div class="creator-gallery-section align-center">
+                    <span class="navigation-texts">
+                        <p class="gallery-text">Manage your creations of art with the ability to download and share any
+                            of them anywhere! Remove any outdated ones
+                            insure you stay as updated as possible on all meme trends.</p>
+                        <p class="gallery-text">Set your prefered view size of your collection, open any of your meme
+                            for greater inspection and enjoy your saltiness
+                            alone (or with others)</p>
+                    </span>
+                </div>
+
                 <!-- <p class="header-secondary maker-head flex align-start">Meme Maker. The <span
                         class="header-memaker">Memaker</span>.</p>
                 <div class="navigation-maker-section grid align-center">
@@ -103,17 +137,18 @@
                 <footer class="footer-section">
                     <button class="github-btn btn" type="submit">Github</button>
                 </footer>
-    
+
             </main>
-    
+
         </div>
     </main>
 
-    
+
     <script src="js/utils.js"></script>
     <script src="js/storageService.js"></script>
     <script src="js/indexController.js"></script>
     <script src="js/indexService.js"></script>
 
 </body>
+
 </html>

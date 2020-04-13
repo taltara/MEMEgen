@@ -11,6 +11,7 @@ var gLastTouchedSticker = null;
 var gLastStickerTransformer = null;
 var gMemePhotoHeight;
 var gDraggedngSticker = false;
+var gStickersEl;
 
 function init() {
 
@@ -34,7 +35,6 @@ function init() {
 
 }
 
-
 function setTextSizeByScreen(canvasWidth) {
 
     var elTextInput = document.querySelector('.slider-input');
@@ -45,7 +45,7 @@ function setTextSizeByScreen(canvasWidth) {
 
 function initKonva() {
 
-    var divider = (window.innerWidth > 1100) ? (1 / 2.1) : 0.9;
+    var divider = (window.innerWidth > 1100) ? (1 / 2.2) : 0.8;
 
     var elEditMeme = document.querySelector('.edit-meme-section');
     elEditMeme.style.width = `${window.innerWidth * divider}px`;
@@ -130,7 +130,7 @@ function deleteSticker() {
 
 function initStickers() {
 
-    new Siema({
+    gStickersEl = new Siema({
         selector: '.siema',
         duration: 100,
         easing: 'cubic-bezier(.11,.73,.57,1.53)',
@@ -139,7 +139,7 @@ function initStickers() {
         draggable: true,
         multipleDrag: true,
         threshold: 20,
-        loop: true,
+        loop: false,
         rtl: false,
         onInit: () => { },
         onChange: () => { gDraggedngSticker = true },
@@ -267,41 +267,9 @@ function textNodeOnDClick(textNode, tr) {
         var textarea = document.createElement('textarea');
         document.body.appendChild(textarea);
 
-        textarea.value = textNode.text();
-        textarea.style.position = 'absolute';
-        textarea.style.top = areaPosition.y + 'px';
-        textarea.style.left = areaPosition.x + 'px';
-        textarea.style.width = textNode.width() - textNode.padding() * 2 + 'px';
-        textarea.style.height = textNode.height() - textNode.padding() * 2 + 5 + 'px';
-        textarea.style.fontSize = textNode.fontSize() + 'px';
-        textarea.style.border = 'none';
-        textarea.style.padding = '0px';
-        textarea.style.margin = '0px';
-        textarea.style.overflow = 'hidden';
-        textarea.style.background = 'none';
-        textarea.style.outline = 'none';
-        textarea.style.resize = 'none';
-        textarea.style.lineHeight = textNode.lineHeight();
-        textarea.style.fontFamily = textNode.fontFamily();
-        textarea.style.transformOrigin = 'left top';
-        textarea.style.textAlign = textNode.align();
-        textarea.style.color = 'black';
-        var rotation = textNode.rotation();
-        var transform = '';
-        if (rotation) {
-            transform += 'rotateZ(' + rotation + 'deg)';
-        }
+        styleTextAreaOnDbClick(textarea, textNode, areaPosition);
 
-        var px = 0;
-
-        var isFirefox =
-            navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-        if (isFirefox) {
-            px += 2 + Math.round(textNode.fontSize() / 20);
-        }
-        transform += 'translateY(-' + px + 'px)';
-
-        textarea.style.transform = transform;
+        rotateTextAreaOnDbClick(textarea, textNode);
 
         // reset height
         textarea.style.height = 'auto';
@@ -373,7 +341,50 @@ function textNodeOnDClick(textNode, tr) {
             window.addEventListener('click', handleOutsideClick);
         });
     });
+}
 
+
+function rotateTextAreaOnDbClick(textarea, textNode) {
+
+    var rotation = textNode.rotation();
+    var transform = '';
+    if (rotation) {
+        transform += 'rotateZ(' + rotation + 'deg)';
+    }
+
+    var px = 0;
+
+    var isFirefox =
+        navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+    if (isFirefox) {
+        px += 2 + Math.round(textNode.fontSize() / 20);
+    }
+    transform += 'translateY(-' + px + 'px)';
+
+    textarea.style.transform = transform;
+}
+
+function styleTextAreaOnDbClick(textarea, textNode, areaPosition) {
+
+    textarea.value = textNode.text();
+    textarea.style.position = 'absolute';
+    textarea.style.top = areaPosition.y + 'px';
+    textarea.style.left = areaPosition.x + 'px';
+    textarea.style.width = textNode.width() - textNode.padding() * 2 + 'px';
+    textarea.style.height = textNode.height() - textNode.padding() * 2 + 5 + 'px';
+    textarea.style.fontSize = textNode.fontSize() + 'px';
+    textarea.style.border = 'none';
+    textarea.style.padding = '0px';
+    textarea.style.margin = '0px';
+    textarea.style.overflow = 'hidden';
+    textarea.style.background = 'none';
+    textarea.style.outline = 'none';
+    textarea.style.resize = 'none';
+    textarea.style.lineHeight = textNode.lineHeight();
+    textarea.style.fontFamily = textNode.fontFamily();
+    textarea.style.transformOrigin = 'left top';
+    textarea.style.textAlign = textNode.align();
+    textarea.style.color = 'black';
 }
 
 function initMemeTexts() {
@@ -457,16 +468,15 @@ function drawImg() {
         var newImageHeight = img.height;
         var newImageWidth = gCanvas.width;
 
-        if(img.height > img.width) {
+        if (img.height > img.width) {
 
             newImageHeight = gCanvas.height;
             newImageWidth = img.width * (gCanvas.width / img.height);
         } else {
 
             if (img.width > gCanvas.width || img.width < gCanvas.width) {
-    
+
                 newImageHeight = img.height * (gCanvas.width / img.width);
-                // console.log(Math.abs((gCanvas.height - newImageHeight) / 2), img.width, newImageHeight);
             }
 
         }
@@ -758,26 +768,9 @@ function addStickerNode(imgSrc) {
 
         stickerNode.on('mousedown touchstart', function () {
 
-            if (gLastStickerTransformer) gLastStickerTransformer.hide();
-            if (gLastTouchedText) {
-
-                gLastTouchedText.shadowBlur(0);
-                let textEl = findTrByTextNodeId(gLastTouchedText.attrs.id);
-                if (textEl != undefined) textEl.tr.hide();
-            }
-
-            var imageTransformers = layer.children.filter(child => {
-
-                return (child.__proto__.className === 'Transformer' && child._node._id === stickerNode._id);
-            });
-            imageTransformers = imageTransformers[0];
-
-            imageTransformers.show();
-            gLastStickerTransformer = imageTransformers;
-            gLastTouchedSticker = stickerNode;
-            gLastTouchedStickerId = stickerNode.attrs.id;
-
+            onStickerMouseDown(stickerNode);
         });
+
         if (gLastStickerTransformer) {
 
             gLastStickerTransformer.hide();
@@ -798,6 +791,132 @@ function addStickerNode(imgSrc) {
         layer.batchDraw();
 
     });
-
-
 }
+
+function onStickerMouseDown(stickerNode) {
+
+    if (gLastStickerTransformer) gLastStickerTransformer.hide();
+    if (gLastTouchedText) {
+
+        gLastTouchedText.shadowBlur(0);
+        let textEl = findTrByTextNodeId(gLastTouchedText.attrs.id);
+        if (textEl != undefined) textEl.tr.hide();
+    }
+
+    var imageTransformers = layer.children.filter(child => {
+
+        return (child.__proto__.className === 'Transformer' && child._node._id === stickerNode._id);
+    });
+    imageTransformers = imageTransformers[0];
+
+    imageTransformers.show();
+    gLastStickerTransformer = imageTransformers;
+    gLastTouchedSticker = stickerNode;
+    gLastTouchedStickerId = stickerNode.attrs.id;
+}
+
+function tutorialMemeCreator() {
+
+    var elText = document.querySelector('.text-edit');
+    var elTextTop = document.querySelector('.text-edit-top');
+    var elTextMiddle = document.querySelector('.text-edit-middle');
+    var elTextBottom = document.querySelector('.text-edit-lower');
+    var elStickers = document.querySelector('.stickers-section');
+    var elExport = document.querySelector('.export-buttons');
+    var elButtons = document.querySelectorAll('.btn');
+    var elMenu = document.querySelector('.nav-links');
+    gStickersEl;
+
+
+    setTimeout(() => {
+
+        toggleMenu('exit');
+
+        if (window.innerWidth <= 1297) elMenu.classList.remove('side-menu');
+
+        if(window.innerWidth > 1100) elMenu.scrollIntoView();
+        else document.querySelector('canvas').scrollIntoView();
+
+        setTimeout(() => {
+
+            document.body.classList.add('menu-open');
+
+            setTimeout(() => {
+                elText.style.zIndex = '6001';
+
+                setTimeout(() => {
+                    elTextTop.style.background = 'white';
+
+                    setTimeout(() => {
+                        elTextMiddle.style.background = 'white';
+
+                        setTimeout(() => {
+                            elTextBottom.style.background = 'white';
+
+                            setTimeout(() => {
+                                elStickers.style.zIndex = '6001';
+
+                                setTimeout(() => {
+
+                                    elStickers.style.transform = 'scale(1.1)';
+
+                                    setTimeout(() => {
+                                        gStickersEl.goTo(Math.floor(Math.random() * zStickerGallery.length + 10));
+
+                                        setTimeout(() => {
+
+                                            elExport.style.zIndex = '6001';
+
+                                            setTimeout(() => {
+
+                                                elButtons[0].style.transform = 'scale(1.1)';
+
+                                                setTimeout(() => {
+                                                    elButtons[0].style.transform = 'uset';
+                                                    elButtons[1].style.transform = 'scale(1.1)';
+
+                                                    setTimeout(() => {
+                                                        elButtons[1].style.transform = 'uset';
+                                                        elButtons[2].style.transform = 'scale(1.1)';
+
+                                                        setTimeout(() => {
+                                                            elButtons[2].style.transform = 'uset';
+
+                                                            setTimeout(() => {
+                                                                if (window.innerWidth <= 1297) elMenu.classList.add('side-menu');
+
+                                                                document.body.classList.remove('menu-open');
+                                                                elText.style.zIndex = 'unset';
+                                                                elTextTop.style.background = elTextMiddle.style.background = elTextBottom.style.background = 'unset';
+                                                                elStickers.style.zIndex = 'unset';
+                                                                elStickers.style.transform = 'unset';
+                                                                gStickersEl.goTo(0);
+                                                                elExport.style.zIndex = 'unset';
+                                                                toggleMenu('about');
+                                                            }, 1000);
+                                                        }, 500);
+                                                    }, 500);
+                                                }, 500);
+
+                                            }, 500);
+                                        }, 500);
+                                    }, 500);
+
+                                }, 300);
+                            }, 500);
+                        }, 500);
+                    }, 500);
+                }, 500);
+            }, 200);
+        }, 300);
+    }, 300);
+}
+
+
+// setTimeout(() => {
+//     if (window.innerWidth <= 1297) elMenu.classList.add('side-menu');
+
+//     document.body.classList.remove('menu-open');
+//     elExternalSection.style.zIndex = 'unset';
+//     toggleMenu('about');
+// }, 1000);
